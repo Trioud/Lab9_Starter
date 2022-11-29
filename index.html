@@ -47,6 +47,13 @@
       width: 122px;
     }
   </style>
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "effbec3793044a31b5c33be14b479a61"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+  </script>
 </head>
 
 <body>
@@ -134,6 +141,8 @@
     window.addEventListener('error', () => {
       console.log('Sadly an error occured my friend')
     })
+
+    window.onerror = (err) => {TrackJS.track(err)}
     // Start your code here
     // You may move this JS to another file if you wish
   </script>

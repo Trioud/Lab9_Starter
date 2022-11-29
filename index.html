@@ -88,6 +88,12 @@
   </main>
 
   <script>
+    class ValidationError extends Error {
+      constructor(message) {
+        super(message);
+        this.name = "ValidationError";
+      }
+    }
 
     let form = document.querySelector('form');
     const readOutputs = () => {
@@ -96,19 +102,7 @@
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
       return {output: output, firstNum: firstNum, secondNum: secondNum, operator: operator};
-    }
-
-    try {
-        const {output, firstNum, secondNum, operator} = readOutputs();
-        const innerOutput = output.innerHTML;
-        if (!innerOutput)
-          throw 'No Output';
-    }
-    catch (err) {
-      console.log(`${err}`);
-    }
-    finally {
-      console.log('End of Test');
+      
     }
 
     form.addEventListener('submit', e => {
@@ -116,6 +110,25 @@
       const {output, firstNum, secondNum, operator} = readOutputs();
 
       output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      try {
+        const {output, firstNum, secondNum, operator} = readOutputs();
+        const innerOutput = output.innerHTML;
+        if (innerOutput == 30)
+          throw new ValidationError('HATE 30');
+        else if (innerOutput == 10)
+          throw "I hate 10"
+      }
+      catch (err) {
+        if (err instanceof ValidationError) {
+          console.log(`${err.name}: ${err.message}`);
+        }
+        else {
+          console.log(err);
+        }
+      }
+      finally {
+        console.log('End of Test');
+      }
     });
 
     window.addEventListener('error', () => {

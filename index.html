@@ -98,6 +98,19 @@
       return {output: output, firstNum: firstNum, secondNum: secondNum, operator: operator};
     }
 
+    try {
+        const {output, firstNum, secondNum, operator} = readOutputs();
+        const innerOutput = output.innerHTML;
+        if (!innerOutput)
+          throw 'No Output';
+    }
+    catch (err) {
+      console.log(`${err}`);
+    }
+    finally {
+      console.log('End of Test');
+    }
+
     form.addEventListener('submit', e => {
       e.preventDefault();
       const {output, firstNum, secondNum, operator} = readOutputs();
